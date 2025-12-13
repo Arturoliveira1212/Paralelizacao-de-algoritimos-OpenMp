@@ -1,0 +1,1 @@
+# Paralelizacao-de-algoritimos-OpenMp
