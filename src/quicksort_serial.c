@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <time.h>
+#include <omp.h>
 #include <libppc.h>
 
 // Função auxiliar para trocar dois elementos
@@ -108,13 +109,21 @@ int main(int argc, char **argv)
     print_double_vector(vetor, tamanho < 10 ? tamanho : 10, 10);
     printf("\n");
 
+    // Início da medição de tempo
+    double inicio = omp_get_wtime();
+
     // Executar Quicksort
     quicksort(vetor, 0, tamanho - 1);
+
+    // Fim da medição de tempo
+    double fim = omp_get_wtime();
+    double tempo_execucao = fim - inicio;
 
     // Exibir amostra do vetor ordenado (primeiros 10 elementos)
     printf("Vetor ordenado (primeiros %ld elementos):\n", tamanho < 10 ? tamanho : 10);
     print_double_vector(vetor, tamanho < 10 ? tamanho : 10, 10);
     printf("\n");
+    printf("Tempo de execucao: %.6f segundos\n", tempo_execucao);
 
     // Salvar o vetor ordenado
     int resultado_salvamento = save_double_vector(vetor, tamanho, "vetor_ordenado.out");

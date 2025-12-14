@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <time.h>
 #include <math.h>
+#include <omp.h>
 #include <libppc.h>
 
 int main(int argc, char **argv)
@@ -68,6 +69,9 @@ int main(int argc, char **argv)
     print_int_vector(vetor, tamanho < 10 ? tamanho : 10, 10);
     printf("\n");
 
+    // Início da medição de tempo
+    double inicio = omp_get_wtime();
+
     // Countsort - Encontrar min e max para determinar o range
     int min_val = vetor[0];
     int max_val = vetor[0];
@@ -120,10 +124,15 @@ int main(int argc, char **argv)
         count[idx]--;
     }
 
+    // Fim da medição de tempo
+    double fim = omp_get_wtime();
+    double tempo_execucao = fim - inicio;
+
     // Exibir amostra do vetor ordenado (primeiros 10 elementos)
     printf("Vetor ordenado (primeiros %ld elementos):\n", tamanho < 10 ? tamanho : 10);
     print_int_vector(vetor_ordenado, tamanho < 10 ? tamanho : 10, 10);
     printf("\n");
+    printf("Tempo de execucao: %.6f segundos\n", tempo_execucao);
 
     // Salvar o vetor ordenado
     int resultado_salvamento = save_int_vector(vetor_ordenado, tamanho, "vetor_ordenado.out");

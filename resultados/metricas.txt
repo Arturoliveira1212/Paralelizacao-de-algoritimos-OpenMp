@@ -1,0 +1,76 @@
+========================================
+  MULTIPLICAÇÃO DE MATRIZES
+========================================
+
+--- Tamanho: 500×500 ---
+  Serial (1T):   Tempo=0.617951 s
+  Paralelo (2T): Tempo=0.329855 s | Speedup=1.87x | Eficiência=93.0%
+  Paralelo (4T): Tempo=0.337830 s | Speedup=1.83x | Eficiência=45.0%
+
+--- Tamanho: 1000×1000 ---
+  Serial (1T):   Tempo=5.084800 s
+  Paralelo (2T): Tempo=3.150465 s | Speedup=1.61x | Eficiência=80.0%
+  Paralelo (4T): Tempo=3.147935 s | Speedup=1.62x | Eficiência=40.0%
+
+--- Tamanho: 2000×2000 ---
+  Serial (1T):   Tempo=42.250630 s
+  Paralelo (2T): Tempo=27.920666 s | Speedup=1.51x | Eficiência=75.0%
+  Paralelo (4T): Tempo=31.538224 s | Speedup=1.34x | Eficiência=33.0%
+
+========================================
+  COUNTING SORT
+========================================
+
+--- Tamanho: 100000 ---
+  Serial (1T):   Tempo=0.000994 s
+  Paralelo (2T): Tempo=0.000746 s | Speedup=1.33x | Eficiência=66.0%
+  Paralelo (4T): Tempo=0.000920 s | Speedup=1.08x | Eficiência=27.0%
+
+--- Tamanho: 200000 ---
+  Serial (1T):   Tempo=0.002019 s
+  Paralelo (2T): Tempo=0.001846 s | Speedup=1.09x | Eficiência=54.0%
+  Paralelo (4T): Tempo=0.001709 s | Speedup=1.18x | Eficiência=29.0%
+
+--- Tamanho: 400000 ---
+  Serial (1T):   Tempo=0.006600 s
+  Paralelo (2T): Tempo=0.003413 s | Speedup=1.93x | Eficiência=96.0%
+  Paralelo (4T): Tempo=0.003679 s | Speedup=1.79x | Eficiência=44.0%
+
+========================================
+  QUICKSORT
+========================================
+
+--- Tamanho: 100000 ---
+  Serial (1T):   Tempo=0.018977 s
+  Paralelo (2T): Tempo=0.019349 s | Speedup=0.98x | Eficiência=49.0%
+  Paralelo (4T): Tempo=0.021579 s | Speedup=0.88x | Eficiência=21.0%
+
+--- Tamanho: 200000 ---
+  Serial (1T):   Tempo=0.040773 s
+  Paralelo (2T): Tempo=0.035567 s | Speedup=1.15x | Eficiência=57.0%
+  Paralelo (4T): Tempo=0.030012 s | Speedup=1.36x | Eficiência=33.0%
+
+--- Tamanho: 400000 ---
+  Serial (1T):   Tempo=0.066617 s
+  Paralelo (2T): Tempo=0.060302 s | Speedup=1.10x | Eficiência=55.0%
+  Paralelo (4T): Tempo=0.054633 s | Speedup=1.22x | Eficiência=30.0%
+
+========================================
+  TRIANGULAÇÃO (ELIMINAÇÃO GAUSSIANA)
+========================================
+
+--- Tamanho: 250×250 ---
+  Serial (1T):   Tempo=0.019765 s
+  Paralelo (2T): Tempo=0.011038 s | Speedup=1.79x | Eficiência=89.0%
+  Paralelo (4T): Tempo=0.044427 s | Speedup=0.44x | Eficiência=11.0%
+
+--- Tamanho: 500×500 ---
+  Serial (1T):   Tempo=0.176048 s
+  Paralelo (2T): Tempo=0.091944 s | Speedup=1.91x | Eficiência=95.0%
+  Paralelo (4T): Tempo=0.128762 s | Speedup=1.37x | Eficiência=34.0%
+
+--- Tamanho: 1000×1000 ---
+  Serial (1T):   Tempo=0.999088 s
+  Paralelo (2T): Tempo=0.698116 s | Speedup=1.43x | Eficiência=71.0%
+  Paralelo (4T): Tempo=0.736977 s | Speedup=1.36x | Eficiência=33.0%
+

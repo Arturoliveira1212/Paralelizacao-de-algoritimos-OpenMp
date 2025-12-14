@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <time.h>
+#include <omp.h>
 #include <libppc.h>
 
 int main(int argc, char **argv)
@@ -116,6 +117,9 @@ int main(int argc, char **argv)
         return 1;
     }
 
+    // Início da medição de tempo
+    double inicio = omp_get_wtime();
+
     // Multiplicação de matrizes (versão serial)
     // mR[i,j] = soma(m1[i,k] * m2[k,j]) para k de 0 a ordem-1
     for (int i = 0; i < ordem; i++)
@@ -133,9 +137,14 @@ int main(int argc, char **argv)
         }
     }
 
+    // Fim da medição de tempo
+    double fim = omp_get_wtime();
+    double tempo_execucao = fim - inicio;
+
     printf("Matriz Resultado:\n");
     print_double_matrix(mR, ordem, ordem);
     printf("\n");
+    printf("Tempo de execucao: %.6f segundos\n", tempo_execucao);
 
     // Salvar a matriz resultado no arquivo matriz_mult_serial.out
     int resultado_salvamento = save_double_matrix(mR, ordem, ordem, "matriz_mult_serial.out");
