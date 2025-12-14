@@ -5,42 +5,36 @@
 #include <omp.h>
 #include <libppc.h>
 
-// Função auxiliar para trocar dois elementos
-void swap(double *a, double *b)
+void trocar_elementos(double *a, double *b)
 {
     double temp = *a;
     *a = *b;
     *b = temp;
 }
 
-// Função de partição para o Quicksort
-long int partition(double *vetor, long int low, long int high)
+long int particao(double *vetor, long int low, long int high)
 {
-    double pivot = vetor[high]; // Escolhe o último elemento como pivô
-    long int i = low - 1;       // Índice do menor elemento
+    double pivot = vetor[high];
+    long int i = low - 1;
 
     for (long int j = low; j < high; j++)
     {
-        // Se o elemento atual é menor ou igual ao pivô
         if (vetor[j] <= pivot)
         {
             i++;
-            swap(&vetor[i], &vetor[j]);
+            trocar_elementos(&vetor[i], &vetor[j]);
         }
     }
-    swap(&vetor[i + 1], &vetor[high]);
+    trocar_elementos(&vetor[i + 1], &vetor[high]);
     return i + 1;
 }
 
-// Função recursiva do Quicksort
 void quicksort(double *vetor, long int low, long int high)
 {
     if (low < high)
     {
-        // pi é o índice de partição
-        long int pi = partition(vetor, low, high);
+        long int pi = particao(vetor, low, high);
 
-        // Ordena os elementos antes e depois da partição
         quicksort(vetor, low, pi - 1);
         quicksort(vetor, pi + 1, high);
     }
@@ -48,7 +42,7 @@ void quicksort(double *vetor, long int low, long int high)
 
 int main(int argc, char **argv)
 {
-    // Verificação dos argumentos de entrada
+    // Valida argumentos passados via terminal
     if (argc != 3)
     {
         fprintf(stderr, "Uso: %s <tamanho> <arquivo_vetor>\n", argv[0]);
@@ -56,10 +50,8 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    // Inicializa o gerador de números aleatórios
     srand(time(NULL));
 
-    // Leitura dos parâmetros
     long int tamanho = atol(argv[1]);
     const char *arquivo_vetor = argv[2];
 
@@ -69,42 +61,24 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    printf("Quicksort (Versão Serial)\n");
+    printf("Quicksort (Serial)\n");
     printf("Tamanho do vetor: %ld\n", tamanho);
     printf("Arquivo: %s\n", arquivo_vetor);
     printf("\n");
 
-    // Verificar se o vetor existe; se não, gerar valores aleatórios
     double *vetor;
     if (access(arquivo_vetor, F_OK) == 0)
     {
         printf("Carregando vetor do arquivo...\n");
         vetor = load_double_vector(arquivo_vetor, tamanho);
-        if (vetor == NULL)
-        {
-            fprintf(stderr, "Erro ao carregar vetor do arquivo %s\n", arquivo_vetor);
-            return 1;
-        }
     }
     else
     {
         printf("Gerando novos valores aleatórios para o vetor...\n");
         vetor = generate_random_double_vector(tamanho, 0.0, 1000.0);
-        if (vetor == NULL)
-        {
-            fprintf(stderr, "Erro ao gerar vetor\n");
-            return 1;
-        }
-        // Salvar o vetor gerado para uso futuro
-        if (save_double_vector(vetor, tamanho, arquivo_vetor) != 0)
-        {
-            fprintf(stderr, "Erro ao salvar vetor no arquivo %s\n", arquivo_vetor);
-            free(vetor);
-            return 1;
-        }
+        save_double_vector(vetor, tamanho, arquivo_vetor);
     }
 
-    // Exibir amostra do vetor original (primeiros 10 elementos)
     printf("\nVetor original (primeiros %ld elementos):\n", tamanho < 10 ? tamanho : 10);
     print_double_vector(vetor, tamanho < 10 ? tamanho : 10, 10);
     printf("\n");
@@ -112,31 +86,20 @@ int main(int argc, char **argv)
     // Início da medição de tempo
     double inicio = omp_get_wtime();
 
-    // Executar Quicksort
     quicksort(vetor, 0, tamanho - 1);
 
     // Fim da medição de tempo
     double fim = omp_get_wtime();
     double tempo_execucao = fim - inicio;
 
-    // Exibir amostra do vetor ordenado (primeiros 10 elementos)
     printf("Vetor ordenado (primeiros %ld elementos):\n", tamanho < 10 ? tamanho : 10);
     print_double_vector(vetor, tamanho < 10 ? tamanho : 10, 10);
     printf("\n");
     printf("Tempo de execucao: %.6f segundos\n", tempo_execucao);
 
-    // Salvar o vetor ordenado
-    int resultado_salvamento = save_double_vector(vetor, tamanho, "vetor_ordenado.out");
-    if (resultado_salvamento != 0)
-    {
-        fprintf(stderr, "Erro ao salvar vetor ordenado no arquivo vetor_ordenado.out\n");
-        free(vetor);
-        return 1;
-    }
+    save_double_vector(vetor, tamanho, "vetor_ordenado_serial.out");
+    printf("Vetor ordenado salvo em: vetor_ordenado_serial.out\n");
 
-    printf("Vetor ordenado salvo em: vetor_ordenado.out\n");
-
-    // Liberação da memória
     free(vetor);
 
     return 0;
