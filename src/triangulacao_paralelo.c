@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <omp.h>
-#include "../LibPPC/include/libppc.h"
+#include <libppc.h>
 
 void eliminacao_gaussiana_paralela(double *matriz, int linhas, int colunas)
 {
